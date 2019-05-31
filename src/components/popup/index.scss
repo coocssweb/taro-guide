@@ -15,7 +15,7 @@
         transition: opacity .3s ease;
         &--open{
             display: block;
-            opacity: 1;
+            animation: fadeIn .3s ease forwards;
         }
     }
     &-content{
@@ -30,7 +30,7 @@
         transition: transform .3s ease;
         &--open{
             display: block;
-            transform: translateY(0%);
+            animation: slideIn .3s ease forwards;
         }
     }
 }
