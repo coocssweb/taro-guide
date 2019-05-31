@@ -1,11 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import './index.scss'
+import { View } from '@tarojs/components'
+import Banner from './banner';
+import Stroies from './stroies';
 
-export default class Index extends Component {
-
-  config = {
-    navigationBarTitleText: '首页'
+export default class Home extends Component {
+  constructor () {
+    this.state = {};
   }
 
   componentWillMount () { }
@@ -20,10 +20,10 @@ export default class Index extends Component {
 
   render () {
     return (
-      <View className='index'>
-        <Text>Hello world!</Text>
-        <Text>I'm good thank you</Text>
-      </View>
-    )
+        <View className='home'>
+          <Banner />
+          <Stroies />
+        </View>
+    );
   }
 }

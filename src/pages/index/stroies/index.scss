@@ -1,0 +1,67 @@
+.stories{
+    &-header{
+        padding: 40PX 10PX 20PX 20PX;
+    }
+    &-title{
+        display: block;
+        font-size: 36px;
+        color: #000000;
+    }
+    &-desc{
+        display: block;
+        font-size: 28px;
+        color: #999999;
+        margin-top: 5PX;
+    }
+}
+
+.story{
+    position: relative;
+    margin-bottom: 1PX;
+    &-photo{
+        display: block;
+        width: 100%;
+        height: 1000px;
+    }
+    &-cover{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: radial-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .5));   
+    }
+    &-content{
+        position: absolute;
+        bottom: 20PX;
+        left: 20PX;
+    }
+    &-title{
+        display: block;
+        font-size: 50px;
+        color: #ffffff;
+        font-weight: 700;
+    }
+    &-desc{
+        display: block;
+        font-size: 30px;
+        color: #ffffff;
+        font-weight: 700;
+    }
+    &-link{
+        display: inline-block;
+        width: 200px;
+        height: 80px;
+        border-radius: 40px;
+        text-align: center;
+        line-height: 80px;
+        background-color: rgba(255, 255, 255, 1);
+        color: #000000;
+        font-size: 28px;
+        font-weight: 700;
+        margin-top: 50px;
+        &--hover{
+            background-color: rgba(255, 255, 255, .8);
+        }
+    }
+}
