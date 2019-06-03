@@ -1,15 +1,78 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View, ScrollView, Text, Image, RichText, Button } from '@tarojs/components'
+import Taro, { Component } from '@tarojs/taro';
+import { View, ScrollView, Text, Image, RichText, Button, Canvas } from '@tarojs/components';
 import Share from '../../components/share';
 import './index.scss';
 
+const shareImage = 'https://c.static-nike.com/a/images/f_auto/w_1536,c_limit/wt0kiegic12tbxzphe0g/nikecom-homepage-cn-527.jpg';
+
 export default class Detail extends Component {
-    onShareAppMessage = (res) => {
+    shareFilePath: null;
+
+    onShareAppMessage = () => {
         return {
             title: '好莱坞人像布光课',
             path: '/pages/detail/index',
-            imageUrl: 'https://c.static-nike.com/a/images/f_auto/w_1536,c_limit/wt0kiegic12tbxzphe0g/nikecom-homepage-cn-527.jpg'
+            imageUrl: shareImage
         };
+    }
+
+    handleGeneratePoster = () => {
+        const getImageInfo = (src) => {
+            return new Promise ((resolve, reject) => {
+                Taro.getImageInfo({
+                    src, 
+                    success: (imageInfo) => {
+                        resolve(imageInfo)
+                    },
+                    fail: (error) => {
+                        reject(error);
+                    }
+                })
+            });
+        };
+
+        const generator = () => {
+            return new Promise((resolve, reject) => {
+                if (this.shareFilePath) {
+                    resolve(this.shareFilePath);
+                }
+                const ctx = Taro.createCanvasContext('detail-canvas');
+                getImageInfo(shareImage).then((imageInfo) => {
+                    console.log(imageInfo);
+                    ctx.drawImage(shareImage.path, 0, 0, imageInfo.width, imageInfo.height);
+                    try {
+                        ctx.draw(false, () => {
+                            console.log(222);
+                            Taro.canvasToTempFilePath({
+                                canvasId: 'detail-canvas',
+                                quality: 1,
+                                width: 750,
+                                height: 1078,
+                                destWidth: 750,
+                                destHeight: 1078,
+                                success: res => {
+                                    resolve(res.tempFilePath);
+                                },
+                                fail(e){
+                                    reject(e);
+                                }
+                            });
+                        });
+                    } catch (e) {
+                        console.log(e);
+                    }
+                    
+                }, (error) => {
+                    reject(error);
+                });
+            });
+        }
+
+        generator().then((result) => {
+            console.log(result);
+        }, (error) => {
+            console.log(error);
+        });
     }
 
     render () {
@@ -29,7 +92,10 @@ export default class Detail extends Component {
                 </View>
 
                 <View className='detail-footer'>
-                    <Share />
+                    <Canvas id='detail-canvas' style='width:750px;height:1078px; position: absolute; z-index: -1; top: -2078px;' />
+                    <Share onGeneratePoster={this.handleGeneratePoster}>
+                        <Button className='detail-share'>分享给朋友</Button>
+                    </Share>
                 </View>
             </ScrollView>
         );

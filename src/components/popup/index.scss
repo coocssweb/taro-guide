@@ -17,6 +17,10 @@
             display: block;
             animation: fadeIn .3s ease forwards;
         }
+        &--hide{
+            display: block;
+            animation: fadeOut .3s ease forwards;
+        }
     }
     &-content{
         position: fixed;
@@ -24,13 +28,16 @@
         left: 0;
         bottom: 0;
         background-color: #ffffff;
-        box-shadow: 0 -1PX 3PX rgba(0, 0, 0, .8);
         display: none;
         transform: translateY(100%);
         transition: transform .3s ease;
         &--open{
             display: block;
             animation: slideIn .3s ease forwards;
+        }
+        &--hide{
+            display: block;
+            animation: slideOut .3s ease forwards;
         }
     }
 }

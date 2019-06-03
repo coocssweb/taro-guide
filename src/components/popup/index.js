@@ -6,17 +6,39 @@ export default class Popup extends Component {
     static prefixCls = 'popup';
     constructor () {
         // this.haveOpened = false;
+        // css3动画状态
+        this.animating = false;
         this.state = {
             hide: false
         };
     }
 
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.visible && nextProps.visible !== this.props.visible) {
+            this.animating = true;
+        }
+    }
+
     handleMaskClick = () => {
-        this.props.onClose();
+        if (this.animating) {
+            return false;
+        }
+        this.animating = true;
+        this.setState({
+            hide: true
+        });
     }
 
     handleContentAnimationEnd = () => {
+        this.animating = false;
+        if (!this.state.hide) {
+            return;
+        }
 
+        this.props.onClose();
+        this.setState({
+            hide: false
+        });
     }
 
     render () {
@@ -26,9 +48,8 @@ export default class Popup extends Component {
         // haveOpened false =>return null
         // 发现有问题，后续可以优化性能
         // this.haveOpened = this.haveOpened || visible;
-        console.log(visible);
-        const maskCls = `popup-mask `;
-        const contentCls = 'popup-content';
+        let maskCls = `popup-mask `;
+        let contentCls = 'popup-content ';
         if (visible) {
             maskCls += 'popup-mask--open ';
             contentCls += 'popup-content--open ';
@@ -42,7 +63,7 @@ export default class Popup extends Component {
             <View className={`popup ${visible ? 'popup--open' : ''}`}>
                 <View onClick={this.handleMaskClick}
                   className={maskCls}></View>
-                <View className={`popup-content ${visible ? 'popup-content--open' : ''}`} 
+                <View className={contentCls} 
                   onAnimationEnd={this.handleContentAnimationEnd}>
                     { this.props.children }
                 </View>

@@ -7,5 +7,29 @@
     }
     &-body{
         padding: 0PX 20PX 20PX 20PX;
+        display: flex;
+        justify-content: space-around;
+    }
+    &-btn{
+        border: 0px;
+        font-size: 12PX;
+        background-color: transparent;
+        &::after{
+            display: none;
+        }
+    }
+    &-icon{
+        width: 25PX;
+        height: 25PX;
+        margin: 0px auto 5PX auto;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        &--download{
+            background-image: url(../../images/icon-generator.png);
+        }
+        &--wechat{
+            background-image: url(../../images/icon-wechat.png);
+        }
     }
 }
